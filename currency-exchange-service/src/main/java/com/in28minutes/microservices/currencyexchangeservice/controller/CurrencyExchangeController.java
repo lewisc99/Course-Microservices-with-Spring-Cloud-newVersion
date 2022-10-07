@@ -2,6 +2,7 @@ package com.in28minutes.microservices.currencyexchangeservice.controller;
 
 
 import com.in28minutes.microservices.currencyexchangeservice.models.CurrencyExchange;
+import com.in28minutes.microservices.currencyexchangeservice.repositories.CurrencyExchangeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,11 @@ public class CurrencyExchangeController {
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private CurrencyExchangeRepository repository;
+
+
+
 
     @GetMapping("/currency-exchange/from/{from}/to/{to}")
     public CurrencyExchange retrieveExchangeValue(
@@ -25,8 +31,15 @@ public class CurrencyExchangeController {
     {
 
         String port = environment.getProperty("local.server.port");
+        CurrencyExchange currencyExchange = repository.findByFromAndTo(from,to);
 
-        return new CurrencyExchange(from,to, BigDecimal.valueOf(50),port);
+        if (currencyExchange == null)
+        {
+            throw new RuntimeException("Unable to find data from:  " + from + " to: " + to);
+        }
+
+        currencyExchange.setEnvironment(port);
+        return currencyExchange;
 
     }
 }
