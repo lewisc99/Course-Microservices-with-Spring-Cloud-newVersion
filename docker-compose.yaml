@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  currency-exchange:
+    ports:
+      - "8000:8080"
+    container_name: currency-exchange-service
+    build:
+      context: currency-exchange-service/
+      dockerfile: Dockerfile
+    networks:
+      - currency-network
+networks:
+  currency-network:
