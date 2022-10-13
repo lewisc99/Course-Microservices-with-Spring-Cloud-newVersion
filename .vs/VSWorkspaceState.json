@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\eureka-server",
+    "\\eureka-server\\src",
+    "\\eureka-server\\src\\main",
+    "\\eureka-server\\src\\main\\java",
+    "\\eureka-server\\src\\main\\java\\com",
+    "\\eureka-server\\src\\main\\java\\com\\in28minutes",
+    "\\eureka-server\\src\\main\\java\\com\\in28minutes\\microservices",
+    "\\eureka-server\\src\\main\\java\\com\\in28minutes\\microservices\\eurekaserver"
+  ],
+  "SelectedNode": "\\eureka-server\\Dockerfile",
+  "PreviewInSolutionExplorer": false
+}

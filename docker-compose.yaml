@@ -1,14 +1,41 @@
-version: '3.4'
+version: '3.7'
 
 services:
   currency-exchange:
     ports:
-      - "8000:8080"
-    container_name: currency-exchange-service
+      - "8000:8000"
+    container_name: master-currency-exchange
     build:
       context: currency-exchange-service/
       dockerfile: Dockerfile
     networks:
       - currency-network
+    depends_on:
+      - eureka-server
+    environment:
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+  eureka-server:
+    ports:
+      - "8761:8761"
+    container_name: master-eureka-server
+    build:
+      context: eureka-server/
+      dockerfile: Dockerfile
+    networks:
+      - currency-network
+  currency-conversion-service:
+    ports:
+      - "8100:8100"
+    container_name: master-currency-conversion
+    build:
+      context: currency-conversion-service/
+      dockerfile: Dockerfile
+    networks:
+      - currency-network
+    depends_on:
+      - eureka-server
+    environment:
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
+
 networks:
   currency-network:
