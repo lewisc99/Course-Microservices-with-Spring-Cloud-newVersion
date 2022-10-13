@@ -36,6 +36,18 @@ services:
       - eureka-server
     environment:
       eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
-
+  api-gateway:
+    ports:
+      - "8765:8765"
+    container_name: master-api-gateway
+    build:
+      context: api-gateway/
+      dockerfile: Dockerfile
+    networks:
+      - currency-network
+    depends_on:
+      - eureka-server
+    environment:
+      eureka.client.service-url.defaultZone: http://eureka-server:8761/eureka
 networks:
   currency-network:
